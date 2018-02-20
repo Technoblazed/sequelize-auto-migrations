@@ -11,7 +11,7 @@ const _ = require('lodash');
 
 const optionDefinitions = [
   { name: 'preview', alias: 'p', type: Boolean, description: 'Show migration preview (does not change any files)' },
-  { name: 'name', alias: 'n', type: String, description: 'Set migration name (default: "noname")' },
+  { name: 'name', alias: 'n', type: String, description: 'Set migration name (default: Date in ms)' },
   { name: 'comment', alias: 'c', type: String, description: 'Set migration comment' },
   { name: 'execute', alias: 'x', type: Boolean, description: 'Create new migration and execute it' },
   { name: 'migrations-path', type: String, description: 'The path to the migrations folder' },
@@ -50,8 +50,6 @@ try {
 } catch (e) {
   console.log(e);
 }
-
-//console.log(path.join(migrationsDir, '_current.json'), JSON.parse(fs.readFileSync(path.join(migrationsDir, '_current.json') )))
 
 const sequelize = require(modelsDir).sequelize;
 
@@ -98,7 +96,7 @@ fs.writeFileSync(path.join(migrationsDir, '_current.json'), JSON.stringify(curre
 const info = migrate.writeMigration(currentState.revision,
   migration,
   migrationsDir,
-  options.name ? options.name : 'noname',
+  options.name ? options.name : new Date().getTime(),
   options.comment ? options.comment : '');
 
 console.log(`New migration to revision ${currentState.revision} has been saved to file '${info.filename}'`);

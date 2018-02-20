@@ -96,7 +96,7 @@ fs.writeFileSync(path.join(migrationsDir, '_current.json'), JSON.stringify(curre
 const info = migrate.writeMigration(currentState.revision,
   migration,
   migrationsDir,
-  options.name ? options.name : new Date().getTime(),
+  options.name ? options.name : new Date().getTime().toString(),
   options.comment ? options.comment : '');
 
 console.log(`New migration to revision ${currentState.revision} has been saved to file '${info.filename}'`);
